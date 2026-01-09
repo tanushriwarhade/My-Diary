@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ My Dreamy Notes ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ My Dreamy Notes ✨</h1>
+            <p class="tagline">Where memories bloom & dreams come true 🌸💕</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('diary')">
+                <span>📖 Diary</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('todo')">
+                <span>✅ To-Do List</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('drawing')">
+                <span>🎨 Drawing</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('gallery')">
+                <span>🖼️ Gallery</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('recipes')">
+                <span>🍰 Recipes</span>
+            </button>
+        </div>
+
+        <!-- Diary Tab -->
+        <div id="diary" class="tab-content active">
+            <div class="content-box">
+                <span class="decorative-corners corner-tl">🌸</span>
+                <span class="decorative-corners corner-tr">💕</span>
+                <span class="decorative-corners corner-bl">🦋</span>
+                <span class="decorative-corners corner-br">✨</span>
+                
+                <h2 style="color: var(--primary-pink); margin-bottom: 20px; text-align: center;">Dear Diary... 💭</h2>
+                
+                <div class="diary-entry">
+                    <input type="text" id="diaryTitle" placeholder="✏️ Title of your day...">
+                    
+                    <div class="mood-selector">
+                        <span style="font-weight: 600; color: var(--primary-pink);">Today's mood:</span>
+                        <span class="mood-tag" onclick="selectMood(this)" data-mood="happy">😊 Happy</span>
+                        <span class="mood-tag" onclick="selectMood(this)" data-mood="excited">🤩 Excited</span>
+                        <span class="mood-tag" onclick="selectMood(this)" data-mood="calm">😌 Calm</span>
+                        <span class="mood-tag" onclick="selectMood(this)" data-mood="sad">😢 Sad</span>
+                        <span class="mood-tag" onclick="selectMood(this)" data-mood="thoughtful">🤔 Thoughtful</span>
+                    </div>
+                    
+                    <textarea id="diaryContent" placeholder="Write about your day, dreams, thoughts... ✨"></textarea>
+                    <button class="btn" onclick="saveDiary()">💕 Save Entry</button>
+                </div>
+
+                <div class="entries-list" id="diaryEntries"></div>
+            </div>
+        </div>
+
+        <!-- To-Do List Tab -->
+        <div id="todo" class="tab-content">
+            <div class="content-box">
+                <span class="decorative-corners corner-tl">⭐</span>
+                <span class="decorative-corners corner-tr">🌟</span>
+                <span class="decorative-corners corner-bl">💫</span>
+                <span class="decorative-corners corner-br">✨</span>
+                
+                <h2 style="color: var(--primary-pink); margin-bottom: 20px; text-align: center;">Things To Do 📝</h2>
+                
+                <div class="todo-input-group">
+                    <input type="text" id="todoInput" placeholder="Add a new task... ✨" onkeypress="if(event.key==='Enter') addTodo()">
+                    <button class="btn" onclick="addTodo()">➕ Add</button>
+                </div>
+
+                <div id="todoList"></div>
+            </div>
+        </div>
+
+        <!-- Drawing Tab -->
+        <div id="drawing" class="tab-content">
+            <div class="content-box">
+                <span class="decorative-corners corner-tl">🎨</span>
+                <span class="decorative-corners corner-tr">🖌️</span>
+                <span class="decorative-corners corner-bl">🌈</span>
+                <span class="decorative-corners corner-br">✏️</span>
+                
+                <h2 style="color: var(--primary-pink); margin-bottom: 20px; text-align: center;">Draw & Color 🎨</h2>
+                
+                <div class="drawing-tools">
+                    <label>Choose Color:</label>
+                    <div class="color-picker">
+                        <div class="color-btn active" style="background: #ff6b9d;" onclick="changeColor('#ff6b9d', this)"></div>
+                        <div class="color-btn" style="background: #c8b6ff;" onclick="changeColor('#c8b6ff', this)"></div>
+                        <div class="color-btn" style="background: #b8e0d2;" onclick="changeColor('#b8e0d2', this)"></div>
+                        <div class="color-btn" style="background: #ffd5cd;" onclick="changeColor('#ffd5cd', this)"></div>
+                        <div class="color-btn" style="background: #ffeb3b;" onclick="changeColor('#ffeb3b', this)"></div>
+                        <div class="color-btn" style="background: #ff9800;" onclick="changeColor('#ff9800', this)"></div>
+                        <div class="color-btn" style="background: #000000;" onclick="changeColor('#000000', this)"></div>
+                        <div class="color-btn" style="background: #ffffff; border-color: #ccc;" onclick="changeColor('#ffffff', this)"></div>
+                    </div>
+                    
+                    <label>Brush Size:</label>
+                    <input type="range" id="brushSize" min="1" max="20" value="5" style="accent-color: var(--primary-pink);">
+                    
+                    <button class="btn" onclick="clearCanvas()">🗑️ Clear</button>
+                    <button class="btn" onclick="saveDrawing()">💾 Save Drawing</button>
+                </div>
+
+                <canvas id="drawingCanvas" width="800" height="500"></canvas>
+            </div>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div id="gallery" class="tab-content">
+            <div class="content-box">
+                <span class="decorative-corners corner-tl">📸</span>
+                <span class="decorative-corners corner-tr">🖼️</span>
+                <span class="decorative-corners corner-bl">🎀</span>
+                <span class="decorative-corners corner-br">💖</span>
+                
+                <h2 style="color: var(--primary-pink); margin-bottom: 20px; text-align: center;">My Gallery 📸</h2>
+                
+                <div class="image-upload">
+                    <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+                        <input type="file" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(event)">
+                        <p style="font-size: 3em; margin-bottom: 10px;">📷</p>
+                        <p style="font-weight: 600; color: var(--primary-pink);">Click to upload images</p>
+                        <p style="color: #888; font-size: 0.9em;">You can select multiple images!</p>
+                    </div>
+                </div>
+
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </div>
+
+        <!-- Recipes Tab -->
+        <div id="recipes" class="tab-content">
+            <div class="content-box">
+                <span class="decorative-corners corner-tl">🍰</span>
+                <span class="decorative-corners corner-tr">🧁</span>
+                <span class="decorative-corners corner-bl">🍪</span>
+                <span class="decorative-corners corner-br">🎂</span>
+                
+                <h2 style="color: var(--primary-pink); margin-bottom: 20px; text-align: center;">My Recipes 🍰</h2>
+                
+                <div class="recipe-form">
+                    <input type="text" id="recipeName" placeholder="Recipe name... 🍰" style="padding: 15px; border: 2px solid var(--soft-pink); border-radius: 15px; font-family: 'Quicksand', sans-serif; font-size: 1.1em;">
+                    <textarea id="recipeIngredients" placeholder="Ingredients (one per line)... 🥄" style="padding: 15px; border: 2px solid var(--soft-pink); border-radius: 15px; font-family: 'Quicksand', sans-serif; min-height: 100px;"></textarea>
+                    <textarea id="recipeInstructions" placeholder="Instructions (step by step)... 👩‍🍳" style="padding: 15px; border: 2px solid var(--soft-pink); border-radius: 15px; font-family: 'Quicksand', sans-serif; min-height: 150px;"></textarea>
+                    <button class="btn" onclick="saveRecipe()">💕 Save Recipe</button>
+                </div>
+
+                <div class="entries-list" id="recipesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="styles.js"></script>
+</body>
+</html>
